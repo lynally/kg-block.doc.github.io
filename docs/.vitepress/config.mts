@@ -4,6 +4,10 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "kg-ui文档",
   description: "kg-ui文档",
+
+  base:'/kg-block.doc.github.io/',
+  //outDir: './docs',
+
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
