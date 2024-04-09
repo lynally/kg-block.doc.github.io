@@ -1,1 +1,0 @@
-import{_ as i,c as a,o as s,a2 as l}from"./chunks/framework.DrV-2T2-.js";const u=JSON.parse('{"title":"标签组件","description":"","frontmatter":{},"headers":[],"relativePath":"kg_tags_v2.md","filePath":"kg_tags_v2.md"}'),t={name:"kg_tags_v2.md"},e=l("",16),n=[e];function h(p,r,k,o,d,g){return s(),a("div",null,n)}const E=i(t,[["render",h]]);export{u as __pageData,E as default};
