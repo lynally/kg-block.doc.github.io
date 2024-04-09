@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: "kg-ui"
+  name: "kg-ui1"
   text: "kg-ui库文档"
   tagline: 星光探索组件库
   actions:
