@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitepress'
+import {defineConfig} from "vitepress";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -19,9 +19,10 @@ export default defineConfig({
       {
         text: "Examples",
         items: [
+          {text: "Examples", link: "/markdown-examples.md"},
           {text: "标签组件vue2", link: "/kg_tags_v2"},
-          {text: "copilot组件vue3", link: "/kg_copilot_v3"},
           {text: "copilot组件vue2", link: "/kg_copilot_v2"},
+          {text: "copilot组件vue3", link: "/kg_copilot_v3"},
           {text: "xxxx2", link: "/api-examples"},
         ],
       },
