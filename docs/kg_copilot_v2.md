@@ -1,4 +1,4 @@
-# copilot 组件
+# Copilot 组件
 
 ## ✨ 简介：
 
@@ -39,11 +39,9 @@ Vue.use(KnowUI, {store: vuex对象})
 
 ::: tip 关于 plugins 的传参解释
 
-- `requestParameFn` 和 `responseParameFn` 是分别用于处理接口发送的函数和处理接口返回的函数
-- `requestParameFn` 的入参为用户的发出的消息列表
-- `responseParameFn`的入参为接口返回值
-- 你可以在 `requestParameFn` 函数中通过 data 定义接口参数，headers 定义你的请求头。
-- isOver 是接口结束标识
+- `requestParameFn` 和 `responseParameFn` 函数分别用于处理接口参数和接口返回值。
+- 你可以在 `requestParameFn` 函数接收用户的发出的消息列表，并通过 data 定义接口参数，headers 定义你的请求头，将拼接好的参数返回。
+- 你可以在 `responseParameFn` 函数接收 JSON 格式的接口返回值，并通过 type 定义回答类型，content 定义回答结果，isOver 定义接口结束标识，将拼接好的参数返回。
   :::
 
 ::: details 属性传参示例代码
@@ -78,9 +76,11 @@ Vue.use(KnowUI, {store: vuex对象})
               "可对用户提供的网站链接及关键词等信息进行内容提炼并撰写一份舆情简报。",
             requestParameFn: (msgs) => {
               return {
+                // 接口参数
                 data: {
                   url: msgs.pop(), //取最后一条消息
                 },
+                // 请求头
                 headers: {
                   accessToken: "354216b2d3cd4a3bb06bd479eb1dd2d6",
                 },
@@ -109,55 +109,3 @@ Vue.use(KnowUI, {store: vuex对象})
 - getSearchText： 获取输入框的文字
 - setSearchText： 设置输入框的文字
 - getMsgList： 获取消息列表信息
-
-## Custom Containers
-
-**Input**
-
-```md
-::: info
-This is an info box.
-:::
-
-::: tip
-This is a tip.
-:::
-
-::: warning
-This is a warning.
-:::
-
-::: danger
-This is a dangerous warning.
-:::
-
-::: details
-This is a details block.
-:::
-```
-
-**Output**
-
-::: info
-This is an info box.
-:::
-
-::: tip
-This is a tip.
-:::
-
-::: warning
-This is a warning.
-:::
-
-::: danger
-This is a dangerous warning.
-:::
-
-::: details
-This is a details block.
-:::
-
-## More
-
-Check out the documentation for the [full list of markdown extensions](https://vitepress.dev/guide/markdown).

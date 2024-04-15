@@ -1,0 +1,8 @@
+:root{
+  --vp-button-alt-bg:var(--vp-c-brand-1);
+  --vp-button-alt-text: var(--vp-c-white);
+  --vp-button-alt-hover-bg:var(--vp-c-brand-3);
+  --vp-button-alt-hover-text:var(--vp-c-white);
+  --vp-button-alt-active-bg:var(--vp-c-brand-3);
+  --vp-button-alt-active-text:var(--vp-c-white);
+}

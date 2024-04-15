@@ -12,18 +12,16 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       {text: "Home", link: "/"},
-      {text: "Examples", link: "/markdown-examples.md"},
+      {text: "文档", link: "/kg_tags_v2"},
     ],
 
     sidebar: [
       {
-        text: "Examples",
+        text: "文档",
         items: [
-          {text: "Examples", link: "/markdown-examples.md"},
           {text: "标签组件vue2", link: "/kg_tags_v2"},
           {text: "copilot组件vue2", link: "/kg_copilot_v2"},
           {text: "copilot组件vue3", link: "/kg_copilot_v3"},
-          {text: "xxxx2", link: "/api-examples"},
         ],
       },
     ],
