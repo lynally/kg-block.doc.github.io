@@ -1,4 +1,4 @@
-# Copilot 组件
+# Copilot 组件-Vue3
 
 ## ✨ 简介：
 
@@ -35,7 +35,7 @@ Vue.use(KnowUI, {store: pinia对象})
 | ---------- | ------ | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | aiName：   | string | Copilot                                                                      | ai 名称                                                                                                                                                                           |
 | initText： | string | "你好，我是 AI 智能助手，如有任何需要，请随时告诉我，我会尽力为您提供帮助。" | 初始化提示语                                                                                                                                                                      |
-| plugins    | []     | [] =>{}                                                                      | -url 插件接口 url<br/> -name 工具名称<br/> -id 工具 id<br/> -dsc 工具描述<br/> -icon 图表地址<br/> -requestParameFn 接口发送处理函数<br/> -responseParameFn 接口返回处理函数<br/> |
+| plugins    | array  | -                                                                            | -url 插件接口 url<br/> -name 工具名称<br/> -id 工具 id<br/> -dsc 工具描述<br/> -icon 图标地址<br/> -requestParameFn 接口发送处理函数<br/> -responseParameFn 接口返回处理函数<br/> |
 
 ::: tip 关于 plugins 的传参解释
 
