@@ -35,12 +35,13 @@ Vue.use(KnowUI, {store: vuex对象})
 | ---------- | ------ | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | aiName：   | string | Copilot                                                                      | ai 名称                                                                                                                                                                                                   |
 | initText： | string | "你好，我是 AI 智能助手，如有任何需要，请随时告诉我，我会尽力为您提供帮助。" | 初始化提示语                                                                                                                                                                                              |
-| plugins    | array  | -                                                                            | -url 插件接口 url<br/> -name 插件名称<br/> -id 插件 id<br/> -dsc 插件描述<br/>-introduce 插件介绍<br/> -icon 图标地址<br/> -requestParameFn 接口发送处理函数<br/> -responseParameFn 接口返回处理函数<br/> |
+|maxSendNum |number | 0 |限制最大对话次数，0以下无限制
+| plugins    | array  | -                                                                            | -url 插件接口 url<br/> -name 插件名称<br/> -id 插件 id<br/> -dsc 插件描述<br/>-introduce 插件介绍<br/> -icon 图标地址<br/>-onclose 关闭回调<br/> -requestParameFn 接口发送处理函数<br/> -responseParameFn 接口返回处理函数<br/> |
 
 ::: tip 关于 plugins 的传参解释
 
 - `requestParameFn` 和 `responseParameFn` 函数分别用于处理接口参数和接口返回值。
-- 你可以在 `requestParameFn` 函数接收用户的发出的消息列表，并通过 data 定义接口参数，headers 定义你的请求头，将拼接好的参数返回。
+- 你可以在 `requestParameFn` 函数接收用户的发出的消息列表，并通过 data 定义接口参数(body)，headers 定义你的请求头，将拼接好的参数返回。
 - 你可以在 `responseParameFn` 函数接收 JSON 格式的接口返回值，并通过 type 定义回答类型，content 定义回答结果，isOver 定义接口结束标识，将拼接好的参数返回。
   :::
 
@@ -90,7 +91,7 @@ Vue.use(KnowUI, {store: vuex对象})
               const msgData = JSON.parse(msg.data);
               return {
                 type: "text", //普通文本
-                content: msgData.data + "<br/>", //内容
+                content: msgData.data, //内容
                 isOver: msgData.status !== SseStatus.running, //结束标识
               };
             },
@@ -103,6 +104,9 @@ Vue.use(KnowUI, {store: vuex对象})
 ```
 
 :::
+## 插槽
+- avatar 自定义AI头像
+
 
 ## 暴露的方法
 
