@@ -36,7 +36,7 @@ Vue.use(KnowUI, {store: vuex对象})
 | aiName：   | string | Copilot                                                                      | ai 名称                                                                                                                                                                                                   |
 | initText： | string | "你好，我是 AI 智能助手，如有任何需要，请随时告诉我，我会尽力为您提供帮助。" | 初始化提示语                                                                                                                                                                                              |
 |maxSendNum |number | 0 |限制最大对话次数，0以下无限制
-| plugins    | array  | -                                                                            | -url 插件接口 url<br/> -name 插件名称<br/> -id 插件 id<br/> -dsc 插件描述<br/>-introduce 插件介绍<br/> -icon 图标地址<br/>-onclose 关闭回调<br/> -requestParameFn 接口发送处理函数<br/> -responseParameFn 接口返回处理函数<br/> |
+| plugins    | array  | -                                                                            | -url 插件接口 url<br/>-method 请求方式默认post<br/>-name 插件名称<br/> -id 插件 id<br/> -dsc 插件描述<br/>-introduce 插件介绍<br/> -icon 图标地址<br/>-onclose 关闭回调<br/> -requestParameFn 接口发送处理函数<br/> -responseParameFn 接口返回处理函数<br/> |
 
 ::: tip 关于 plugins 的传参解释
 
@@ -111,5 +111,6 @@ Vue.use(KnowUI, {store: vuex对象})
 ## 暴露的方法
 
 - getSearchText： 获取输入框的文字
-- setSearchText： 设置输入框的文字
+- setSearchText(text:string)： 设置输入框的文字
 - getMsgList： 获取消息列表信息
+- sendMsg(text:string): 自动发送消息
