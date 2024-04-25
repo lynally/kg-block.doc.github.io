@@ -103,16 +103,16 @@ Vue.use(KnowUI, {store: pinia对象})
 
 :::
 
+## 插槽
+
+- avatar 自定义 AI 头像
+
 ## 暴露的方法
 
 - getSearchText： 获取输入框的文字
-- setSearchText： 设置输入框的文字
+- setSearchText(text:string)： 设置输入框的文字
 - getMsgList： 获取消息列表信息
-- setMsgList： 设置消息列表信息
-
-## 事件
-
-- sendMsg: 发送时触发
+- sendMsg(text:string): 自动发送消息
 
 ## 接口定义
 
