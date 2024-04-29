@@ -31,13 +31,13 @@ Vue.use(KnowUI, {store: vuex对象})
 
 ## 属性
 
-| 属性名      | 类型   | 默认值                                                                       | 说明                                                                                                                                                                                                                                                         |
-| ----------- | ------ | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| aiName：    | string | Copilot                                                                      | ai 名称                                                                                                                                                                                                                                                      |
-| initText：  | string | "你好，我是 AI 智能助手，如有任何需要，请随时告诉我，我会尽力为您提供帮助。" | 初始化提示语                                                                                                                                                                                                                                                 |
-| placeholder | string | 输入“@”选择插件，可通过上下键切换插件选项，回车选中。                        | 文本框默认提示                                                                                                                                                                                                                                               |
-| maxSendNum  | number | 0                                                                            | 限制最大对话次数，0 以下无限制                                                                                                                                                                                                                               |
-| plugins     | array  | -                                                                            | -url 插件接口 url<br/>-method 请求方式默认 post<br/>-name 插件名称<br/> -id 插件 id<br/> -dsc 插件描述<br/>-introduce 插件介绍<br/> -icon 图标地址<br/>-onclose 关闭回调<br/> -requestParameFn 接口发送处理函数<br/> -responseParameFn 接口返回处理函数<br/> |
+| 属性名      | 类型   | 默认值                                                                       | 说明                                                                                                                                                                                                                                       |
+| ----------- | ------ | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| aiName：    | string | Copilot                                                                      | ai 名称                                                                                                                                                                                                                                    |
+| initText：  | string | "你好，我是 AI 智能助手，如有任何需要，请随时告诉我，我会尽力为您提供帮助。" | 初始化提示语                                                                                                                                                                                                                               |
+| placeholder | string | 输入“@”选择插件，可通过上下键切换插件选项，回车选中。                        | 文本框默认提示                                                                                                                                                                                                                             |
+| maxSendNum  | number | 0                                                                            | 限制最大对话次数，0 以下无限制                                                                                                                                                                                                             |
+| plugins     | array  | -                                                                            | -name 插件名称<br/> -url 插件接口 url<br/> -introduce 插件介绍<br/>-method 请求方式默认 post<br/>-param_desc 插件每个参数的描述<br/>-requir 插件问题描述<br/>-requestParameFn 接口发送处理函数<br/>-responseParameFn 接口返回处理函数<br/> |
 
 ::: tip 关于 plugins 的传参解释
 
@@ -70,28 +70,101 @@ Vue.use(KnowUI, {store: vuex对象})
   export default {
     data() {
       return {
+        intelligentAnalysisConfig: {
+          url: "/api/chat/analysis/message",
+          token: "684bfb41718a477ea6695662ac42e70f",
+        },
+        defaultDeal: {
+          url: "/api/chat/url/report",
+          requestParameFn: (config) => {
+            console.log(config);
+            config.headers.accessToken = "684bfb41718a477ea6695662ac42e70f";
+            return config;
+          },
+          responseParameFn: (msg) => {
+            if (!msg.data) return;
+            const msgData = JSON.parse(msg.data);
+            console.log(msgData);
+            return {
+              type: filetype[msgData.dataType], //消息类型
+              content: msgData.data, //内容
+              isOver: msgData.status !== SseStatus.running, //结束标识
+            };
+          },
+        },
         plugins: [
           {
-            name: "获取简报",
-            url: "api/chat/url/report",
-            describe:
-              "可对用户提供的网站链接及关键词等信息进行内容提炼并撰写一份舆情简报。",
-            requestParameFn: (msgs) => {
+            name: "获取事件快报",
+            url: "/api/chat/url/report",
+            introduce:
+              "可对用户提供的网站链接及关键词等信息进行内容提炼并撰写一份事件简报。",
+            param_desc: {
+              url: "字符串格式，文本信息中出现的url信息，若有多个，则按照要求强烈程度取最高的一条",
+              days: "数字格式，文本信息中要求查询多少天的天数，若有周则算7，月算30，年算365",
+              isInland:
+                "boolean类型 true或者false要求获取的信息为境外则为false，其余情况则为true,需要返回",
+              userLogic:
+                "字符串格式，文本信息在不进行分词的情况下含有符合elasticsearch的query_string 查询的语法的信息则提取且and or not 等转大写，否则不提取。若该字段最终结果不包含and or not任意一个关键词则也不返回该字段",
+              reportType: "若符合该插件固定返回1。",
+            },
+            require: "文本信息中要求制作报告或者出现报告或简报等相关字眼即可",
+            requestParameFn: (config) => {
+              config.headers.accessToken = "684bfb41718a477ea6695662ac42e70f";
+              return config;
+            },
+            responseParameFn: (msg) => {
+              if (!msg.data) return;
+              const msgData = JSON.parse(msg.data);
               return {
-                // 接口参数
-                data: {
-                  url: msgs.pop(), //取最后一条消息
-                },
-                // 请求头
-                headers: {
-                  accessToken: "354216b2d3cd4a3bb06bd479eb1dd2d6",
-                },
+                type: contentType[msgData.dataType], //普通文本
+                content: msgData.data, //内容
+                isOver: msgData.status !== SseStatus.running, //结束标识
               };
+            },
+          },
+          {
+            name: "获取舆情快报",
+            url: "report2/kuaibao_report",
+            introduce:
+              "可对用户提供的网站链接及关键词等信息进行内容提炼并撰写一份舆情快。",
+            param_desc: {
+              url: "字符串格式，文本信息中出现的url信息，若有多个，则按照要求强烈程度取最高的一条",
+            },
+            require: "文本信息中要求舆情快报或出现舆情字眼",
+            requestParameFn: (config) => {
+              config.headers.accessToken = "684bfb41718a477ea6695662ac42e70f";
+              config.data.debug = 1;
+              return config;
             },
             responseParameFn: (msg) => {
               const msgData = JSON.parse(msg.data);
               return {
-                type: "text", //普通文本
+                type: contentType[msgData.dataType],
+                content: msgData.data, //内容
+                isOver: msgData.status !== SseStatus.running, //结束标识
+              };
+            },
+          },
+          {
+            name: "获取热点专报",
+            url: "report2/redian_report",
+            introduce:
+              "可对用户提供的网站链接及关键词等信息进行内容提炼并撰写一份热点专报文件",
+            requestParameFn: (config) => {
+              config.data.debug = 1;
+              config.headers.accessToken = "684bfb41718a477ea6695662ac42e70f";
+              return config;
+            },
+            param_desc: {
+              user_logic:
+                "字符串格式，文本信息在不进行分词的情况下含有符合elasticsearch的query_string 查询的语法的信息则提取且and or not 等转大写，否则不提取。若该字段最终结果不包含and or not任意一个关键词则也不返回该字段",
+              days: "数字格式，文本信息中要求查询多少天的天数，若有周则算7，月算30，年算365",
+            },
+            require: "文本信息中要求热点专报或出现热点字眼",
+            responseParameFn: (msg) => {
+              const msgData = JSON.parse(msg.data);
+              return {
+                type: contentType[msgData.dataType],
                 content: msgData.data, //内容
                 isOver: msgData.status !== SseStatus.running, //结束标识
               };
