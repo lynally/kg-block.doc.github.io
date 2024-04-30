@@ -86,20 +86,17 @@ Vue.use(KnowUI, {store: vuex对象})
           token: "684bfb41718a477ea6695662ac42e70f",
         },
         defaultDeal: {
-          url: "/api/chat/url/report",
+          url: "/api/chat/reply",
+          isSse: false, // 是否为sse
           requestParameFn: (config) => {
-            console.log(config);
-            config.headers.accessToken = "684bfb41718a477ea6695662ac42e70f";
+            config.data = config.lastMsgs;
+            config.headers.accessToken = "6d3a664e69e4426dab1e5bc3e5c5b550";
             return config;
           },
           responseParameFn: (msg) => {
-            if (!msg.data) return;
-            const msgData = JSON.parse(msg.data);
-            console.log(msgData);
             return {
-              type: filetype[msgData.dataType], //消息类型
-              content: msgData.data, //内容
-              isOver: msgData.status !== SseStatus.running, //结束标识
+              type: "text", //消息类型
+              content: msg.data.map((item) => item.message.content).join(""), //内容
             };
           },
         },
