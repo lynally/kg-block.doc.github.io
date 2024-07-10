@@ -63,6 +63,7 @@ Vue.use(KnowUI, {store: pinia对象})
         :plugins="plugins"
         aiName="KPAI"
         initText="你好，我是探索平台智能AI助手，如有任何需要，请随时告诉我，我会尽力为您提供帮助。"
+        @handleClickStopBtn="handleClickStopBtn"
       >
     </div>
   </div>
@@ -192,6 +193,9 @@ Vue.use(KnowUI, {store: pinia对象})
 - setSearchText(text:string)： 设置输入框的文字
 - getMsgList： 获取消息列表信息
 - sendMsg(text:string): 自动发送消息
+- 
+## 事件
+- handleClickStopBtn: 点击停止按钮时触发
 
 ## 接口定义
 
