@@ -21,6 +21,7 @@
 
 ## 事件
 - sendMsg: 发送时触发
+- handleClickStopBtn: 点击停止按钮时触发
 
 ## 接口定义
 - /sendUrl  不使用插件的问答
