@@ -63,6 +63,7 @@ Vue.use(KnowUI, {store: vuex对象})
         :plugins="plugins"
         aiName="KPAI"
         initText="你好，我是探索平台智能AI助手，如有任何需要，请随时告诉我，我会尽力为您提供帮助。"
+        :pluginsPayload="pluginsPayload"
         @handleClickStopBtn="handleClickStopBtn"/>
         
     </div>
@@ -181,6 +182,13 @@ Vue.use(KnowUI, {store: vuex对象})
             },
           },
         ],
+        pluginsPayload: {   // 智能体负载
+          query: "",
+          days: "",
+          url: "",
+          keywords: "",
+          count: ""
+        }
       };
     },
   };
