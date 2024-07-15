@@ -211,3 +211,4 @@ Vue.use(KnowUI, {store: vuex对象})
 
 ## 事件
 - handleClickStopBtn: 点击停止按钮时触发
+- handleClickNewTheme: 点击新主题时触发
